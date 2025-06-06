@@ -1,6 +1,7 @@
 # interview-deck
 
 A tool for preparing technical interviews.
+The frontend is built with React and [Material UI](https://mui.com/) to provide a responsive layout and dark/light themes.
 
 ## Requirements
 

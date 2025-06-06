@@ -2,30 +2,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
-
-const theme = createTheme({
-  palette: {
-    background: {
-      default: '#f1f3f4',
-    },
-    primary: {
-      main: '#4285F4',
-    },
-    secondary: {
-      main: '#DB4437',
-    },
-  },
-  typography: {
-    fontFamily: ['Roboto', 'Inter', 'sans-serif'].join(','),
-  },
-})
+import { CssBaseline } from '@mui/material'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <CssBaseline />
+    <App />
   </StrictMode>,
 )

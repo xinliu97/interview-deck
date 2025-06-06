@@ -1,12 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 body {
-  background-color: #f1f3f4;
   min-height: 100vh;
-  color: #202124;
   font-family: 'Roboto', 'Inter', sans-serif;
 }
