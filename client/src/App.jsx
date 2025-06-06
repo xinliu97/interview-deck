@@ -1,5 +1,17 @@
 import { BrowserRouter, Routes, Route, Link as RouterLink } from 'react-router-dom'
-import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material'
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Container,
+  ThemeProvider,
+  createTheme,
+  CssBaseline,
+  IconButton,
+} from '@mui/material'
+import { Brightness4, Brightness7 } from '@mui/icons-material'
+import { useMemo, useState, useEffect } from 'react'
 import { useLocalStore } from './hooks/useLocalStore'
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
@@ -9,8 +21,31 @@ import './App.css'
 
 export default function App() {
   const store = useLocalStore()
+  const [mode, setMode] = useState(() => localStorage.getItem('mode') || 'light')
+  useEffect(() => {
+    localStorage.setItem('mode', mode)
+  }, [mode])
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          primary: { main: '#1a73e8' },
+        },
+        typography: {
+          fontFamily: ['Roboto', 'Inter', 'sans-serif'].join(','),
+        },
+      }),
+    [mode],
+  )
+
+  const toggleMode = () => setMode(prev => (prev === 'light' ? 'dark' : 'light'))
+
   return (
-    <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
       <AppBar position="static" color="primary">
         <Toolbar sx={{ gap: 2 }}>
           <Typography
@@ -27,6 +62,9 @@ export default function App() {
           <Button color="inherit" component={RouterLink} to="/fav">
             收藏
           </Button>
+          <IconButton color="inherit" onClick={toggleMode}>
+            {mode === 'light' ? <Brightness4 /> : <Brightness7 />}
+          </IconButton>
           {store.token ? (
             <Button color="inherit" onClick={store.logout}>
               退出
@@ -52,5 +90,6 @@ export default function App() {
         </Routes>
       </Container>
     </BrowserRouter>
+    </ThemeProvider>
   )
 }
