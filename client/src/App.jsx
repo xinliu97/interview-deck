@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link as RouterLink } from 'react-router-dom'
+import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material'
 import { useLocalStore } from './hooks/useLocalStore'
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
@@ -8,17 +9,30 @@ export default function App() {
   const store = useLocalStore()
   return (
     <BrowserRouter>
-      <nav className="bg-white shadow">
-        <div className="max-w-3xl mx-auto p-4 flex items-center gap-6">
-          <Link to="/" className="font-semibold text-lg text-gray-900 mr-auto">Interview Deck</Link>
-          <Link to="/" className="text-gray-600 hover:text-blue-600">首页</Link>
-          <Link to="/fav" className="text-gray-600 hover:text-blue-600">收藏</Link>
-        </div>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Home store={store} />} />
-        <Route path="/fav" element={<Favorites store={store} />} />
-      </Routes>
+      <AppBar position="static" color="primary">
+        <Toolbar sx={{ gap: 2 }}>
+          <Typography
+            variant="h6"
+            component={RouterLink}
+            to="/"
+            sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
+          >
+            Interview Deck
+          </Typography>
+          <Button color="inherit" component={RouterLink} to="/">
+            首页
+          </Button>
+          <Button color="inherit" component={RouterLink} to="/fav">
+            收藏
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth="md" sx={{ mt: 2 }}>
+        <Routes>
+          <Route path="/" element={<Home store={store} />} />
+          <Route path="/fav" element={<Favorites store={store} />} />
+        </Routes>
+      </Container>
     </BrowserRouter>
   )
 }
