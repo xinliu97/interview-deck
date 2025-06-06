@@ -42,3 +42,16 @@ A helper script `deploy.sh` is provided at the repository root. It installs depe
 ```
 
 This is useful for quickly verifying the built application.
+
+## Backend Server
+
+A minimal Express backend is included under the `server` directory. Install dependencies and start it with:
+
+```bash
+cd server
+npm install
+npm start
+```
+
+The server exposes a single endpoint `/api/questions` which returns the list of interview questions as JSON.
+
