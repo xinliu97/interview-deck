@@ -1,6 +1,15 @@
 import { useState } from 'react'
 import { questions } from '../data'
 import QuestionCard from '../components/QuestionCard'
+import {
+  Box,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+} from '@mui/material'
 
 const categories = ['all', 'frontend', 'backend', 'system', 'algorithm']
 
@@ -15,28 +24,37 @@ export default function Home({ store }) {
   })
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-3xl font-semibold mb-4">面试知识卡片库</h1>
-      <div className="mb-4 flex flex-wrap gap-3 items-center">
-        <input
-          className="border border-gray-300 rounded-md p-2 flex-1 min-w-40 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="搜索题目"
+    <Box>
+      <Typography variant="h4" component="h1" gutterBottom>
+        面试知识卡片库
+      </Typography>
+      <Box sx={{ mb: 2, display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center' }}>
+        <TextField
+          label="搜索题目"
+          variant="outlined"
           value={keyword}
           onChange={e => setKeyword(e.target.value)}
+          sx={{ flex: 1, minWidth: 160 }}
         />
-        <select
-          className="border border-gray-300 rounded-md p-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-          value={cat}
-          onChange={e => setCat(e.target.value)}
-        >
-          {categories.map(c => (
-            <option key={c} value={c}>{c === 'all' ? '全部' : c}</option>
-          ))}
-        </select>
-      </div>
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel id="cat-label">分类</InputLabel>
+          <Select
+            labelId="cat-label"
+            label="分类"
+            value={cat}
+            onChange={e => setCat(e.target.value)}
+          >
+            {categories.map(c => (
+              <MenuItem key={c} value={c}>
+                {c === 'all' ? '全部' : c}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
       {filtered.map(q => (
         <QuestionCard key={q.id} q={q} store={store} />
       ))}
-    </div>
+    </Box>
   )
 }
