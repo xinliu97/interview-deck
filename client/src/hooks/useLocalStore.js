@@ -38,12 +38,23 @@ export function useLocalStore() {
     setStore(prev => ({ ...prev, status: { ...(prev.status || {}), [id]: status } }))
   }, [])
 
+  const setToken = useCallback(token => {
+    setStore(prev => ({ ...prev, token }))
+  }, [])
+
+  const logout = useCallback(() => {
+    setStore(prev => ({ ...prev, token: null }))
+  }, [])
+
   return {
     favorites: store.favorites || [],
     notes: store.notes || {},
     status: store.status || {},
+    token: store.token || null,
     toggleFavorite,
     setNote,
     setStatus,
+    setToken,
+    logout,
   }
 }
