@@ -18,29 +18,32 @@ export default function QuestionCard({ q, store }) {
   }
 
   return (
-    <div className="bg-white border border-gray-200 shadow rounded-lg p-4 mb-4 transition-shadow hover:shadow-lg">
+    <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-5 mb-4 transition-shadow hover:shadow-md">
       <div className="flex justify-between items-start">
         <h3 className="font-semibold text-lg">{q.question}</h3>
-        <button onClick={() => store.toggleFavorite(q.id)}>
+        <button
+          onClick={() => store.toggleFavorite(q.id)}
+          className={`text-xl focus:outline-none ${store.favorites.includes(q.id) ? 'text-yellow-500' : 'text-gray-300'}`}
+        >
           {store.favorites.includes(q.id) ? '★' : '☆'}
         </button>
       </div>
       <div className="text-sm text-gray-500 mb-2">分类：{q.category}</div>
-      <button className="text-blue-600 mb-2" onClick={() => setShowAnswer(v => !v)}>
+      <button className="text-blue-600 hover:underline mb-2" onClick={() => setShowAnswer(v => !v)}>
         {showAnswer ? '隐藏答案' : '查看答案'}
       </button>
       {showAnswer && (
         <p className="mb-2 text-gray-700 transition-opacity duration-300">{q.answer}</p>
       )}
       <textarea
-        className="w-full border rounded p-2 mb-2 text-sm"
+        className="w-full border border-gray-300 rounded-md p-2 mb-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         placeholder="个人笔记"
         value={note}
         onChange={e => setNote(e.target.value)}
         onBlur={handleBlur}
       />
       <button
-        className="text-sm bg-gray-200 px-2 py-1 rounded"
+        className="text-sm bg-gray-100 px-2 py-1 rounded hover:bg-gray-200"
         onClick={handleStatusClick}
       >
         状态：{status}
