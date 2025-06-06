@@ -15,6 +15,7 @@ import { useMemo, useState, useEffect } from 'react'
 import { useLocalStore } from './hooks/useLocalStore'
 import Home from './pages/Home'
 import Favorites from './pages/Favorites'
+import Stats from './pages/Stats'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import './App.css'
@@ -62,6 +63,9 @@ export default function App() {
           <Button color="inherit" component={RouterLink} to="/fav">
             收藏
           </Button>
+          <Button color="inherit" component={RouterLink} to="/stats">
+            数据可视化
+          </Button>
           <IconButton color="inherit" onClick={toggleMode}>
             {mode === 'light' ? <Brightness4 /> : <Brightness7 />}
           </IconButton>
@@ -85,6 +89,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home store={store} />} />
           <Route path="/fav" element={<Favorites store={store} />} />
+          <Route path="/stats" element={<Stats store={store} />} />
           <Route path="/login" element={<Login store={store} />} />
           <Route path="/register" element={<Register />} />
         </Routes>
