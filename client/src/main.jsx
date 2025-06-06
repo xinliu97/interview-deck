@@ -9,6 +9,12 @@ const theme = createTheme({
     background: {
       default: '#f1f3f4',
     },
+    primary: {
+      main: '#4285F4',
+    },
+    secondary: {
+      main: '#DB4437',
+    },
   },
   typography: {
     fontFamily: ['Roboto', 'Inter', 'sans-serif'].join(','),

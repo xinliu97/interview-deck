@@ -53,5 +53,9 @@ npm install
 npm start
 ```
 
-The server exposes a single endpoint `/api/questions` which returns the list of interview questions as JSON.
+The server exposes several endpoints:
+
+- `POST /api/register` – register a new user
+- `POST /api/login` – authenticate and receive a token
+- `GET /api/questions` – returns the list of interview questions as JSON
 
