@@ -17,15 +17,15 @@ export default function Home({ store }) {
   return (
     <div className="p-4 max-w-3xl mx-auto">
       <h1 className="text-3xl font-semibold mb-4">面试知识卡片库</h1>
-      <div className="mb-4 flex flex-wrap gap-2 items-center">
+      <div className="mb-4 flex flex-wrap gap-3 items-center">
         <input
-          className="border rounded p-2 flex-1 min-w-40"
+          className="border border-gray-300 rounded-md p-2 flex-1 min-w-40 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="搜索题目"
           value={keyword}
           onChange={e => setKeyword(e.target.value)}
         />
         <select
-          className="border rounded p-2"
+          className="border border-gray-300 rounded-md p-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           value={cat}
           onChange={e => setCat(e.target.value)}
         >

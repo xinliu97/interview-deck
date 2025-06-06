@@ -8,11 +8,11 @@ export default function App() {
   const store = useLocalStore()
   return (
     <BrowserRouter>
-      <nav className="p-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white">
-        <div className="max-w-3xl mx-auto flex items-center gap-4">
-          <Link to="/" className="font-semibold text-lg mr-auto">Interview Deck</Link>
-          <Link to="/" className="hover:underline">首页</Link>
-          <Link to="/fav" className="hover:underline">收藏</Link>
+      <nav className="bg-white shadow">
+        <div className="max-w-3xl mx-auto p-4 flex items-center gap-6">
+          <Link to="/" className="font-semibold text-lg text-gray-900 mr-auto">Interview Deck</Link>
+          <Link to="/" className="text-gray-600 hover:text-blue-600">首页</Link>
+          <Link to="/fav" className="text-gray-600 hover:text-blue-600">收藏</Link>
         </div>
       </nav>
       <Routes>
