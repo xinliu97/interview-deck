@@ -18,7 +18,7 @@ export default function QuestionCard({ q, store }) {
   }
 
   return (
-    <div className="bg-white shadow rounded p-4 mb-4">
+    <div className="bg-white border border-gray-200 shadow rounded-lg p-4 mb-4 transition-shadow hover:shadow-lg">
       <div className="flex justify-between items-start">
         <h3 className="font-semibold text-lg">{q.question}</h3>
         <button onClick={() => store.toggleFavorite(q.id)}>
@@ -26,10 +26,12 @@ export default function QuestionCard({ q, store }) {
         </button>
       </div>
       <div className="text-sm text-gray-500 mb-2">分类：{q.category}</div>
-      <button className="text-blue-500 mb-2" onClick={() => setShowAnswer(v => !v)}>
+      <button className="text-blue-600 mb-2" onClick={() => setShowAnswer(v => !v)}>
         {showAnswer ? '隐藏答案' : '查看答案'}
       </button>
-      {showAnswer && <p className="mb-2">{q.answer}</p>}
+      {showAnswer && (
+        <p className="mb-2 text-gray-700 transition-opacity duration-300">{q.answer}</p>
+      )}
       <textarea
         className="w-full border rounded p-2 mb-2 text-sm"
         placeholder="个人笔记"
