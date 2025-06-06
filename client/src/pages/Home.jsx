@@ -15,8 +15,8 @@ export default function Home({ store }) {
   })
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">面试知识卡片库</h1>
+    <div className="p-4 max-w-3xl mx-auto">
+      <h1 className="text-3xl font-semibold mb-4">面试知识卡片库</h1>
       <div className="mb-4 flex flex-wrap gap-2 items-center">
         <input
           className="border rounded p-2 flex-1 min-w-40"
