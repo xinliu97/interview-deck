@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import { MongoMemoryServer } from 'mongodb-memory-server'
 import Question from './models/Question.js'
 import UserProgress from './models/UserProgress.js'
 import { seedQuestions } from './seedData.js'
@@ -11,7 +12,14 @@ const PORT = process.env.PORT || 3000
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/interview_deck')
+async function connectDatabase() {
+  if (process.env.MONGO_URI) {
+    await mongoose.connect(process.env.MONGO_URI)
+  } else {
+    const mongoServer = await MongoMemoryServer.create()
+    await mongoose.connect(mongoServer.getUri())
+  }
+}
 
 app.get('/api/questions', async (req, res) => {
   const list = await Question.find().select('-_id -__v').lean()
@@ -50,11 +58,20 @@ app.get('/api/questions/:id/progress', async (req, res) => {
   res.json({ status: 'success', data: progress })
 })
 
-app.listen(PORT, async () => {
-  // Seed database if empty
-  const count = await Question.countDocuments()
-  if (count === 0) {
-    await Question.insertMany(seedQuestions)
+async function start() {
+  try {
+    await connectDatabase()
+    const count = await Question.countDocuments()
+    if (count === 0) {
+      await Question.insertMany(seedQuestions)
+    }
+    app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`)
+    })
+  } catch (err) {
+    console.error('Failed to start server:', err)
+    process.exit(1)
   }
-  console.log(`Server listening on port ${PORT}`)
-})
+}
+
+start()

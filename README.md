@@ -48,11 +48,16 @@ This is useful for quickly verifying the built application.
 
 A minimal Express backend is included under the `server` directory. Install dependencies and start it with:
 
+
 ```bash
 cd server
 npm install
 npm start
 ```
+
+The server connects to MongoDB using the `MONGO_URI` environment variable. If
+no URI is provided, an in-memory MongoDB instance is started automatically, so
+the API works out of the box for local development.
 
 The server exposes several endpoints:
 
