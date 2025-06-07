@@ -1,42 +1,60 @@
 import express from 'express'
 import cors from 'cors'
-import { allQuestions } from './questions.js'
+import mongoose from 'mongoose'
+import Question from './models/Question.js'
+import UserProgress from './models/UserProgress.js'
+import { seedQuestions } from './seedData.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// Middleware
 app.use(cors())
 app.use(express.json())
 
-// In-memory user store
-const users = new Map()
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/interview_deck')
 
-app.post('/api/register', (req, res) => {
-  const { username, password } = req.body
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Missing username or password' })
-  }
-  if (users.has(username)) {
-    return res.status(400).json({ error: 'User already exists' })
-  }
-  users.set(username, { password })
-  res.json({ success: true })
+app.get('/api/questions', async (req, res) => {
+  const list = await Question.find().select('-_id -__v').lean()
+  res.json({ status: 'success', data: list })
 })
 
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body
-  const user = users.get(username)
-  if (!user || user.password !== password) {
-    return res.status(401).json({ error: 'Invalid credentials' })
+app.get('/api/questions/:id', async (req, res) => {
+  const q = await Question.findOne({ id: Number(req.params.id) }).select('-_id -__v').lean()
+  if (!q) return res.status(404).json({ status: 'error', message: 'Not found' })
+  res.json({ status: 'success', data: q })
+})
+
+app.post('/api/questions/:id/notes', async (req, res) => {
+  const { userId, notes } = req.body
+  await UserProgress.findOneAndUpdate(
+    { userId, questionId: Number(req.params.id) },
+    { notes },
+    { upsert: true }
+  )
+  res.json({ status: 'success', message: 'Notes saved' })
+})
+
+app.post('/api/questions/:id/mark-done', async (req, res) => {
+  const { userId } = req.body
+  await UserProgress.findOneAndUpdate(
+    { userId, questionId: Number(req.params.id) },
+    { isDone: true },
+    { upsert: true }
+  )
+  res.json({ status: 'success', message: 'Marked done' })
+})
+
+app.get('/api/questions/:id/progress', async (req, res) => {
+  const { userId } = req.query
+  const progress = await UserProgress.findOne({ userId, questionId: Number(req.params.id) }).select('-_id -__v').lean()
+  res.json({ status: 'success', data: progress })
+})
+
+app.listen(PORT, async () => {
+  // Seed database if empty
+  const count = await Question.countDocuments()
+  if (count === 0) {
+    await Question.insertMany(seedQuestions)
   }
-  res.json({ token: `token-${username}` })
-})
-
-app.get('/api/questions', (req, res) => {
-  res.json(allQuestions)
-})
-
-app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
 })
