@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { questions } from './questions.js'
+import { allQuestions } from './questions.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -34,7 +34,7 @@ app.post('/api/login', (req, res) => {
 })
 
 app.get('/api/questions', (req, res) => {
-  res.json(questions)
+  res.json(allQuestions)
 })
 
 app.listen(PORT, () => {

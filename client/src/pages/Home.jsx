@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { questions } from '../data'
+import { allQuestions } from '../data'
 import QuestionCard from '../components/QuestionCard'
+import QuestionTable from '../components/QuestionTable'
 import {
   Box,
   TextField,
@@ -12,15 +13,19 @@ import {
 } from '@mui/material'
 
 const categories = ['all', 'frontend', 'backend', 'system', 'algorithm']
+const difficulties = ['all', 'Easy', 'Medium', 'Hard']
 
 export default function Home({ store }) {
   const [keyword, setKeyword] = useState('')
   const [cat, setCat] = useState('all')
+  const [diff, setDiff] = useState('all')
 
-  const filtered = questions.filter(q => {
-    const matchKeyword = q.question.includes(keyword)
+  const filtered = allQuestions.filter(q => {
+    const text = q.title || q.question
+    const matchKeyword = text.includes(keyword)
     const matchCat = cat === 'all' || q.category === cat
-    return matchKeyword && matchCat
+    const matchDiff = diff === 'all' || (q.difficulty || 'all') === diff
+    return matchKeyword && matchCat && matchDiff
   })
 
   return (
@@ -51,10 +56,23 @@ export default function Home({ store }) {
             ))}
           </Select>
         </FormControl>
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel id="diff-label">难度</InputLabel>
+          <Select
+            labelId="diff-label"
+            label="难度"
+            value={diff}
+            onChange={e => setDiff(e.target.value)}
+          >
+            {difficulties.map(d => (
+              <MenuItem key={d} value={d}>
+                {d === 'all' ? '全部' : d}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
-      {filtered.map(q => (
-        <QuestionCard key={q.id} q={q} store={store} />
-      ))}
+      <QuestionTable questions={filtered} store={store} />
     </Box>
   )
 }
