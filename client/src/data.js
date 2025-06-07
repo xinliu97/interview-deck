@@ -1,3 +1,5 @@
+import { leetcodeQuestions } from './leetcodeData'
+
 export const questions = [
   {
     id: 1,
@@ -60,3 +62,5 @@ export const questions = [
     answer: '消息队列是一种异步通信模型，用于解耦和削峰填谷。',
   },
 ]
+
+export const allQuestions = [...questions, ...leetcodeQuestions]
