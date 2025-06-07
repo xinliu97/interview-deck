@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Box, Typography, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { LineChart, Line, XAxis, YAxis, Tooltip, PieChart, Pie, Cell, BarChart, Bar, ResponsiveContainer } from 'recharts'
 import { useStats } from '../hooks/useStats'
-import { questions } from '../data'
+import { allQuestions } from '../data'
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042']
 
@@ -31,7 +31,7 @@ export default function Stats({ store }) {
     algorithm: 0,
   }
   const statusCount = { '未开始': 0, '已刷': 0, '多刷': 0 }
-  questions.forEach(q => {
+  allQuestions.forEach(q => {
     const s = store.status[q.id] || '未开始'
     statusCount[s] += 1
     if (s !== '未开始') categoryCount[q.category] += 1

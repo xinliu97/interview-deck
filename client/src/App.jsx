@@ -4,6 +4,7 @@ import {
   Toolbar,
   Typography,
   Button,
+import QuestionDetail from './pages/QuestionDetail'
   Container,
   ThemeProvider,
   createTheme,
@@ -92,6 +93,7 @@ export default function App() {
           <Route path="/stats" element={<Stats store={store} />} />
           <Route path="/login" element={<Login store={store} />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/question/:id" element={<QuestionDetail />} />
         </Routes>
       </Container>
     </BrowserRouter>

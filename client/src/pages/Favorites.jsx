@@ -1,4 +1,4 @@
-import { questions } from '../data'
+import { allQuestions } from '../data'
 import QuestionCard from '../components/QuestionCard'
 import {
   Box,
@@ -13,8 +13,8 @@ import { useState } from 'react'
 
 export default function Favorites({ store }) {
   const [tab, setTab] = useState(0)
-  const favQuestions = questions.filter(q => store.favorites.includes(q.id))
-  const noteQuestions = questions.filter(q => store.notes[q.id])
+  const favQuestions = allQuestions.filter(q => store.favorites.includes(q.id))
+  const noteQuestions = allQuestions.filter(q => store.notes[q.id])
 
   return (
     <Box>

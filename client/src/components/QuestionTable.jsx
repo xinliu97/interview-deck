@@ -1,3 +1,4 @@
+import { Link as RouterLink } from "react-router-dom"
 import {
   Table,
   TableHead,
@@ -26,7 +27,7 @@ export default function QuestionTable({ questions, store }) {
           <TableRow key={q.id}>
             <TableCell>{q.id}</TableCell>
             <TableCell>
-              <Typography variant="body2">{q.title || q.question}</Typography>
+              <Typography component={RouterLink} to={`/question/${q.id}`} variant="body2" sx={{ textDecoration: "none", color: "inherit" }}>{q.title || q.question}</Typography>
             </TableCell>
             <TableCell>{q.category}</TableCell>
             <TableCell>{q.difficulty || '-'}</TableCell>
